@@ -20,6 +20,6 @@ public class SampleJUnitTest extends JUnitTestBase {
 	@Test
 	public void testHomePageHasAHeader() {
 		driver.get(baseUrl);
-		Assert.assertTrue("Incorrect logo text.", "About DuckDuckGo".equals(homepage.logo.getText().trim()));
+		Assert.assertTrue("Incorrect logo text.", "Welcome to the Internet".equals(homepage.logo.getText().trim()));
 	}
 }

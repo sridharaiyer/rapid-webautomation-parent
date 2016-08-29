@@ -46,8 +46,10 @@ public class JUnitTestBase {
 		@Override
 		protected void before() throws Throwable {
 			String browserDriversPath = Paths.get(System.getProperty("user.dir"), "src/test/resources/browserDrivers").toString();
-			Path chromeDriverPath = Paths.get(browserDriversPath, "chromedriver.exe");
-			System.setProperty("webdriver.chrome.driver", chromeDriverPath.toString());
+			String chromeDriverPath = Paths.get(browserDriversPath, "chromedriver.exe").toString();
+			String edgeDriverPath = Paths.get(browserDriversPath, "MicrosoftWebDriver.exe").toString();
+			System.setProperty("webdriver.chrome.driver", chromeDriverPath);
+			System.setProperty("webdriver.edge.driver", edgeDriverPath);
 
 			driver = WebDriverFactory.getDriver(gridHubUrl, capabilities);
 		};
