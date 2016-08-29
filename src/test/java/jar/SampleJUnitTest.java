@@ -10,16 +10,16 @@ import jar.pages.HomePage;
 
 public class SampleJUnitTest extends JUnitTestBase {
 
-  private HomePage homepage;
+	private HomePage homepage;
 
-  @Before
-  public void initPageObjects() {
-    homepage = PageFactory.initElements(driver, HomePage.class);
-  }
+	@Before
+	public void initPageObjects() {
+		homepage = PageFactory.initElements(driver, HomePage.class);
+	}
 
-  @Test
-  public void testHomePageHasAHeader() {
-    driver.get(baseUrl);
-    Assert.assertTrue("Incorrect logo text.", "About DuckDuckGo".equals(homepage.logo.getText().trim()));
-  }
+	@Test
+	public void testHomePageHasAHeader() {
+		driver.get(baseUrl);
+		Assert.assertTrue("Incorrect logo text.", "About DuckDuckGo".equals(homepage.logo.getText().trim()));
+	}
 }

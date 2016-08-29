@@ -1,5 +1,9 @@
 package jar;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.rules.ExternalResource;
@@ -16,32 +20,36 @@ import jar.util.PropertyLoader;
  */
 public class JUnitTestBase {
 
-  protected static String gridHubUrl;
-  protected static String baseUrl;
-  protected static Capabilities capabilities;
+	protected static String gridHubUrl;
+	protected static String baseUrl;
+	protected static Capabilities capabilities;
 
-  protected WebDriver driver;
+	protected WebDriver driver;
 
-  @ClassRule
-  public static ExternalResource webDriverProperties = new ExternalResource() {
-    @Override
-    protected void before() throws Throwable {
-      baseUrl = PropertyLoader.loadProperty("site.url");
-      gridHubUrl = PropertyLoader.loadProperty("grid2.hub");
-      baseUrl = PropertyLoader.loadProperty("site.url");
-      gridHubUrl = PropertyLoader.loadProperty("grid.url");
-      if ("".equals(gridHubUrl)) {
-        gridHubUrl = null;
-      }
-      capabilities = PropertyLoader.loadCapabilities();
-    };
-  };
+	@ClassRule
+	public static ExternalResource webDriverProperties = new ExternalResource() {
+		@Override
+		protected void before() throws Throwable {
+			baseUrl = PropertyLoader.loadProperty("site.url");
+			gridHubUrl = PropertyLoader.loadProperty("grid2.hub");
+			baseUrl = PropertyLoader.loadProperty("site.url");
+			gridHubUrl = PropertyLoader.loadProperty("grid.url");
+			if ("".equals(gridHubUrl)) {
+				gridHubUrl = null;
+			}
+			capabilities = PropertyLoader.loadCapabilities();
+		};
+	};
 
-  @Rule
-  public ExternalResource webDriver = new ExternalResource() {
-    @Override
-    protected void before() throws Throwable {
-      driver = WebDriverFactory.getDriver(gridHubUrl, capabilities);
-    };
-  };
+	@Rule
+	public ExternalResource webDriver = new ExternalResource() {
+		@Override
+		protected void before() throws Throwable {
+			String browserDriversPath = Paths.get(System.getProperty("user.dir"), "src/test/resources/browserDrivers").toString();
+			Path chromeDriverPath = Paths.get(browserDriversPath, "chromedriver.exe");
+			System.setProperty("webdriver.chrome.driver", chromeDriverPath.toString());
+
+			driver = WebDriverFactory.getDriver(gridHubUrl, capabilities);
+		};
+	};
 }
